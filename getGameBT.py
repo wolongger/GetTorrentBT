@@ -54,11 +54,14 @@ def parserTorrent(*args):
 
 
 def getTorrentFile(*args):
+    count = 0
     for url in args[0]:
         r = requests.get(url)
         file_name = url.split('/')[-1]
         with open(os.path.join(work_path, file_name), 'wb') as f:
             f.write(r.content)
+            count += 1
+            print('\r', 'finished:', count, end='')
 
 
 def main():
