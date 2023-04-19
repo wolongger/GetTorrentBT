@@ -54,11 +54,15 @@ def parserTorrent(*args):
 
 
 def getTorrentFile(*args):
+    count = 1
     for url in args[0]:
         r = requests.get(url)
         file_name = url.split('/')[-1]
+        print('downloading: (', count, '): ', file_name)
         with open(os.path.join(work_path, file_name), 'wb') as f:
             f.write(r.content)
+            count += 1
+    print()
 
 
 def main():
@@ -73,7 +77,7 @@ def main():
     # 下载torrent文件
     print("下载torrent链接中...")
     print("任务数量：%s" % len(torrent_url_list))
-    getTorrentFile(torrent_url_list)
+    getTorrentFile(sorted(torrent_url_list, key=lambda x: x.split('/')[-1]))
     print("下载完成.")
 
 
